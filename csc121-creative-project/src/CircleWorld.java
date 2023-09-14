@@ -22,7 +22,7 @@ public class CircleWorld {
      */
     public PApplet draw(PApplet c) {
         c.background(255);
-        c.text("Hello!", 20, 20);
+        c.text("Hello World!", 20, 20);
         c.fill(0, 0, 255);
         c.circle((int)this.x, (int)this.y, 15);
         return c;
