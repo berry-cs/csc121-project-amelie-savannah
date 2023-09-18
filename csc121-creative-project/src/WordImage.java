@@ -26,7 +26,7 @@ public class WordImage {
         c.line(80, 200, 100, 200); //third line for letter
         c.line(110, 200, 130, 200); //fourth line for letter
         c.line(140, 200, 160, 200); //fifth line for letter
-        
+        c.textSize(12);
         
         //letters to go above the corresponding lines
         if (this.status == 1) {
