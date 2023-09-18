@@ -17,6 +17,7 @@ public class HangmanImage {
      */
     public PApplet draw(PApplet c) {
         c.background(255);
+        c.textSize(20);
         c.text("Hangman!", 20, 20);
         c.fill(0, 0, 255);
         
