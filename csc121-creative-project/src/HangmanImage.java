@@ -16,7 +16,6 @@ public class HangmanImage {
      * Renders a picture of the hangman on the window
      */
     public PApplet draw(PApplet c) {
-        c.background(255);
         c.textSize(20);
         c.text("Hangman!", 20, 20);
         c.fill(0, 0, 255);
@@ -28,35 +27,24 @@ public class HangmanImage {
         
         
         //hangman dude
-        if (this.status == 1) {
+        if (this.status >= 1) {
         	c.circle(300, 20, 20); //head
-        } else if (this.status == 2) {
-        	c.circle(300, 20, 20); //head
+        } 
+        if (this.status >= 2) {
         	c.line(300, 30, 300, 80);  //spine
-        } else if (this.status == 3) {
-        	c.circle(300, 20, 20); //head
-        	c.line(300, 30, 300, 80);  //spine
+        } 
+        if (this.status >= 3) {
         	c.line(300, 45, 280, 30); //left arm
-        } else if (this.status == 4) {
-        	c.circle(300, 20, 20); //head
-        	c.line(300, 30, 300, 80);  //spine
-        	c.line(300, 45, 280, 30); //left arm
+        } 
+        if (this.status >= 4) {
         	c.line(300, 45, 320, 30); //right arm
-        } else if (this.status == 5) {
-        	c.circle(300, 20, 20); //head
-        	c.line(300, 30, 300, 80);  //spine
-        	c.line(300, 45, 280, 30); //left arm
-        	c.line(300, 45, 320, 30); //right arm
+        } 
+        if (this.status >= 5) {
         	c.line(300, 80, 280, 105); //left leg
-        } else {
-        	c.circle(300, 20, 20); //head
-        	c.line(300, 30, 300, 80);  //spine
-        	c.line(300, 45, 280, 30); //left arm
-        	c.line(300, 45, 320, 30); //right arm
-        	c.line(300, 80, 280, 105); //left leg
+        } 
+        if (this.status >= 6) {
         	c.line(300, 80, 320, 105); //right leg
         }
-        c.delay(500);
         
         return c;
     }

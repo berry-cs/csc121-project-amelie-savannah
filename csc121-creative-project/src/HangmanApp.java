@@ -4,9 +4,8 @@ import processing.event.*;
 /**
  * Provides the scaffolding to launch a Processing application
  */
-public class CircleApp extends PApplet {
-    HangmanImage h;
-    WordImage w;
+public class HangmanApp extends PApplet {
+    HangmanWorld w;
     
     public void settings() {
         this.size(400, 400);
@@ -14,28 +13,23 @@ public class CircleApp extends PApplet {
     }
     
     public void setup() {
-        h = new HangmanImage(0);
-        w = new WordImage("pearl", 0, 5);
+        w = new HangmanWorld();
     }
     
     public void draw() {
-        h = h.update();
-    	h.draw(this);
-    	w = w.update();
     	w.draw(this);
+    	w = w.update();
     }
     
     public void mousePressed(MouseEvent mev) {
-        //w = w.mousePressed(mev);
-        //h = h.mousePressed(mev);
-        
+        //w = w.mousePressed(mev);        
     }
     
     public void keyPressed(KeyEvent kev) {
-        // w = w.keyPressed(kev);
+        w = w.keyPressed(kev);
     }
 
     public static void main(String[] args) {
-        PApplet.runSketch(new String[] { "CircleApp" }, new CircleApp());
+        PApplet.runSketch(new String[] { "HangmanApp" }, new HangmanApp());
     }
 }
