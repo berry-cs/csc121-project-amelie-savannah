@@ -10,16 +10,16 @@ import processing.event.MouseEvent;
 public class WordImage {
 	String word; //word to be guessed
 	String guess;  //string that user guesses
-	int status; //number representing how wrong letters guessed
+	String wrongLetters; //string of the wrong letters guessed
 	
 	public WordImage(String word) {
-	    this(word, " ".repeat(word.length()), 0);
+	    this(word, " ".repeat(word.length()), "");
 	}
 
-	public WordImage(String word, String guess, int status) {
+	public WordImage(String word, String guess, String wrongLetters) {
 	    this.guess = guess;
 		this.word = word;
-		this.status = status;
+		this.wrongLetters = wrongLetters;
 	}
 	
 	/* replace " " with ch in `guess` in the corresponding positions
@@ -35,7 +35,7 @@ public class WordImage {
 			}
 			return this;
 		} else {
-			status++;
+			this.wrongLetters += ch;
 			return this;
 		}
 	}
@@ -50,7 +50,7 @@ public class WordImage {
 	    return false;
 	}
 	
-	/* if ch occurs in the guess */
+	/* if ch occurs in the guess, helper function for wordDone() */
 	public boolean isInGuess(char ch) {
 	    for (int i = 0 ; i < this.word.length() ; i++) {
 	    	if (this.guess.charAt(i) == ch) {
@@ -81,28 +81,48 @@ public class WordImage {
         for (int j = 0 ; j < this.word.length(); j++) {
         	c.text(this.guess.charAt(j), 27+(30* j), 195);
         }
+        
+        //letters that are not in the word get rendered
+        for (int k = 0 ; k < this.wrongLetters.length() ; k++) {
+        	c.text(this.wrongLetters.charAt(k), (250 + (20 * k)), 200);
+        }
+        
+        //displays a "You Win!" if the word has been correctly guessed
+        if (this.wordDone()) {
+        	c.textSize(50);
+        	c.text("You Win!", 100 , 300);
+        }
+        
+        //displays a "Game Over!" and what the correct answer was if the limit of wrong guesses has been reached
+        if (this.wrongLetters.length() >= 6) {
+        	c.textSize(50);
+        	c.text("Game Over!", 80 , 300);
+        	c.textSize(20);
+        	c.text(("The correct answer was: " + this.word), 75, 350);
+        }
+        
+        c.textSize(12); //resetting the text size to 12 so the start or final images aren't messed up
         return c;
     }
 
     /**
-     * Produces an updated world where the letters pop
-     * up on the screen at each second
+     * This doesn't do anything
     */
     public WordImage update() {
-       return new WordImage("pearl", this.guess, this.status + 1);  
+       return new WordImage(this.word, this.guess, this.wrongLetters);  
     }
     
+    
     /**
-     * Produces an updated world with the position of the
-     * drop updated to the location of the mouse press.
+     * This does nothing right now
      */
     public WordImage mousePressed(MouseEvent mev) {
-        return new WordImage("pearl", this.guess, this.status);
+        return new WordImage(this.word, this.guess, this.wrongLetters);
     }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(guess, status, word);
+		return Objects.hash(guess, word, wrongLetters);
 	}
 
 	@Override
@@ -114,13 +134,12 @@ public class WordImage {
 		if (getClass() != obj.getClass())
 			return false;
 		WordImage other = (WordImage) obj;
-		return Objects.equals(guess, other.guess) && status == other.status && Objects.equals(word, other.word);
+		return Objects.equals(guess, other.guess) && Objects.equals(word, other.word)
+				&& Objects.equals(wrongLetters, other.wrongLetters);
 	}
 
 	@Override
 	public String toString() {
-		return "WordImage [word=" + word + ", guess=" + guess + ", status=" + status + "]";
-	}
-
-    
+		return "WordImage [word=" + word + ", guess=" + guess + ", wrongLetters=" + wrongLetters + "]";
+	}  
 }
