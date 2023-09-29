@@ -41,7 +41,7 @@ public class HangmanWorld implements IWorld {
 	        	this.w.makeGuess(ch);  //"make the guess" --> updates the wordImage
 	        	return new HangmanWorld( this.h, w.update() ); //returns HangmanWorld without updating the HangmanImage, but updates the WordImage
 	        } else {
-	        	this.w.status++;   //increases the WordImage status if the key press is not in the word(kinda bogus rn, not sure if we need it)
+	        	this.w.wrongLetters += ch; //adds the wrong guess into the "list" of wrong guesses
 	        	return new HangmanWorld( h.update(), w.update() );  //returns a HangmanWorld, updating the HangmanImage to account for the wrong guess
 	        }
     	}
