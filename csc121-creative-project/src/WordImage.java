@@ -9,19 +9,17 @@ import processing.event.MouseEvent;
  */
 public class WordImage {
 	String word; //word to be guessed
-	String guess;
-	int status; //number representing how many letters guessed
-	int length;  //length of the word to be guessed (to display lines)
+	String guess;  //string that user guesses
+	int status; //number representing how wrong letters guessed
 	
 	public WordImage(String word) {
-	    this(word, " ".repeat(word.length()), 0, word.length());
+	    this(word, " ".repeat(word.length()), 0);
 	}
 
-	public WordImage(String word, String guess, int status, int length) {
+	public WordImage(String word, String guess, int status) {
 	    this.guess = guess;
 		this.word = word;
 		this.status = status;
-		this.length = length;
 	}
 	
 	/* replace " " with ch in `guess` in the corresponding positions
@@ -29,49 +27,59 @@ public class WordImage {
 	   add 1 to status.
 	 */
 	public WordImage makeGuess(char ch) {
-	    return this;
+		if (this.isInWord(ch)) {
+			for (int i = 0 ; i < this.word.length() ; i++) {
+				if (this.word.charAt(i) == ch) {
+					this.guess = this.guess.substring(0,i) + ch + this.guess.substring(i+1, this.word.length());
+		    	}
+			}
+			return this;
+		} else {
+			status++;
+			return this;
+		}
 	}
 	
 	/* if ch occurs in this word */
 	public boolean isInWord(char ch) {
-	    return true;
+	    for (int i = 0 ; i < this.word.length() ; i++) {
+	    	if (this.word.charAt(i) == ch) {
+	    		return true;
+	    	}
+	    }
+	    return false;
 	}
 	
+	/* if ch occurs in the guess */
+	public boolean isInGuess(char ch) {
+	    for (int i = 0 ; i < this.word.length() ; i++) {
+	    	if (this.guess.charAt(i) == ch) {
+	    		return true;
+	    	}
+	    }
+	    return false;
+	}
 	
+	/** is the word completed? */
+	public boolean wordDone() {
+		return !(this.isInGuess(' '));
+	}
 
 	/**
      * Renders a picture of the letter spaces of the word on the window
      */
     public PApplet draw(PApplet c) {
+    	
     	//spaces for the letters of the word
-        c.line(20, 200, 40, 200); //first line for letter
-        c.line(50, 200, 70, 200); //second line for letter
-        c.line(80, 200, 100, 200); //third line for letter
-        c.line(110, 200, 130, 200); //fourth line for letter
-        c.line(140, 200, 160, 200); //fifth line for letter
-        c.textSize(12);
-        
+    	for (int i = 0 ; i < this.word.length(); i++) {
+    		c.line(20+(30 * i), 200, 40+(30 * i), 200);
+    	}
+    	
+    	c.textSize(12);
+    	
         //letters to go above the corresponding lines
-        if (this.status == 1) {
-        	c.text('p', 27, 195); //P of "pearl"
-        } else if (this.status == 2) {
-        	c.text('p', 27, 195); //P of "pearl"
-        	c.text('e', 57, 195); //E of "pearl"
-        } else if (this.status == 3) {
-        	c.text('p', 27, 195); //P of "pearl"
-        	c.text('e', 57, 195); //E of "pearl"
-        	c.text('a', 87, 195); //A of "pearl"
-        } else if (this.status == 4) {
-        	c.text('p', 27, 195); //P of "pearl"
-        	c.text('e', 57, 195); //E of "pearl"
-        	c.text('a', 87, 195); //A of "pearl"
-        	c.text('r', 117, 195); //R of "pearl"
-        } else {
-        	c.text('p', 27, 195); //P of "pearl"
-        	c.text('e', 57, 195); //E of "pearl"
-        	c.text('a', 87, 195); //A of "pearl"
-        	c.text('r', 117, 195); //R of "pearl"
-        	c.text('l', 147, 195); //L of "pearl"
+        for (int j = 0 ; j < this.word.length(); j++) {
+        	c.text(this.guess.charAt(j), 27+(30* j), 195);
         }
         return c;
     }
@@ -81,7 +89,7 @@ public class WordImage {
      * up on the screen at each second
     */
     public WordImage update() {
-       return new WordImage("pearl", this.guess, this.status + 1, 5);  
+       return new WordImage("pearl", this.guess, this.status + 1);  
     }
     
     /**
@@ -89,29 +97,30 @@ public class WordImage {
      * drop updated to the location of the mouse press.
      */
     public WordImage mousePressed(MouseEvent mev) {
-        return new WordImage("pearl", this.guess, this.status, 5);
+        return new WordImage("pearl", this.guess, this.status);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(guess, length, status, word);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(guess, status, word);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        WordImage other = (WordImage) obj;
-        return Objects.equals(guess, other.guess) && length == other.length && status == other.status
-                && Objects.equals(word, other.word);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WordImage other = (WordImage) obj;
+		return Objects.equals(guess, other.guess) && status == other.status && Objects.equals(word, other.word);
+	}
 
-    @Override
-    public String toString() {
-        return "WordImage [word=" + word + ", guess=" + guess + ", status=" + status + ", length=" + length + "]";
-    }
+	@Override
+	public String toString() {
+		return "WordImage [word=" + word + ", guess=" + guess + ", status=" + status + "]";
+	}
+
+    
 }
