@@ -6,7 +6,7 @@ public class StartWorld implements IWorld {
 	@Override
 	public PApplet draw(PApplet c) {
 		c.background(120);
-		c.text("Press space bar to start", 100, 100);
+		c.text("Press space bar to start", 130, 150);
 		return c;
 	}
 
@@ -18,7 +18,7 @@ public class StartWorld implements IWorld {
 	@Override
 	public IWorld keyPressed(KeyEvent kev) {
 		if (kev.getKey() == ' ') {
-			return  new HangmanWorld();
+			return new HangmanWorld();
 		} else {
 			return this;
 		}
