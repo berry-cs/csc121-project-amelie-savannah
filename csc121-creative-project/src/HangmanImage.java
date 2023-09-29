@@ -49,13 +49,23 @@ public class HangmanImage {
         return c;
     }
 
+    /** returns true if the hangman has been filled i.e. game over */
+    public boolean manFilled() {
+		return (status >= 6);
+	}
+    
     /**
      * Produces an updated world where the hangman dude
      * appears at each update
      */
     public HangmanImage update() {
-        return new HangmanImage(this.status + 1);
+    	if (this.manFilled()) { //if its already full, don't update
+    		return this;
+    	} else {
+    		return new HangmanImage(this.status + 1);
+    	}
     }
+    
     
     /**
      * Produces an updated world with the position of the
