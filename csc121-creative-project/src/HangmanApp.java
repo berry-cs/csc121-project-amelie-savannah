@@ -9,11 +9,9 @@ public class HangmanApp extends PApplet {
     
     public void settings() {
         this.size(400, 400);
-        //TO-DO w.size(70, 70); trying to change font size for words 
     }
     
     public void setup() {
-    	//w = new HangmanWorld(new HangmanImage(0), new WordImage("pearl"));  startWorld() isn't updating
         w = new StartWorld();
     }
     
