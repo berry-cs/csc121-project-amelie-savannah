@@ -55,8 +55,7 @@ public class HangmanImage {
 	}
     
     /**
-     * Produces an updated world where the hangman dude
-     * appears at each update
+     * Updates the status of *this* if the image isn't already full
      */
     public HangmanImage update() {
     	if (this.manFilled()) { //if its already full, don't update
@@ -68,8 +67,7 @@ public class HangmanImage {
     
     
     /**
-     * Produces an updated world with the position of the
-     * drop updated to the location of the mouse press.
+     * this does nothing for now
      */
     public HangmanImage mousePressed(MouseEvent mev) {
         return new HangmanImage(0);
