@@ -106,14 +106,18 @@ public class WordImage {
         if (this.wordDone()) {
         	c.textSize(50);
         	c.text("You Win!", 100 , 300);
+        	c.textSize(15);
+        	c.text("press period to start a new game", 90, 330);
         }
         
         //displays a "Game Over!" and what the correct answer was if the limit of wrong guesses has been reached
         if (this.wrongLetters.length() >= 6) {
         	c.textSize(50);
-        	c.text("Game Over!", 80 , 300);
+        	c.text("Game Over!", 80 , 275);
         	c.textSize(20);
-        	c.text(("The correct answer was: " + this.word), 75, 350);
+        	c.text(("The correct answer was: " + this.word), 65, 315);
+        	c.textSize(15);
+        	c.text("press period to start a new game", 90, 350);
         }
         
         c.textSize(12); //resetting the text size to 12 so the start or final images aren't messed up
