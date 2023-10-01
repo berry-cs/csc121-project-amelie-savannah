@@ -1,16 +1,25 @@
 import processing.core.*;
+import java.util.Random;
 import processing.event.KeyEvent;
 
 public class HangmanWorld implements IWorld {
+	WordLib l;
     HangmanImage h;
     WordImage w;
 
     public HangmanWorld() {
+    	l = new WordLib();
+    	
+    	Random r = new Random();  //getting a random index to pull a word from the list of words in WordLib
+    	int randomNumber = r.nextInt(l.getWords().length);
+    	
         h = new HangmanImage(0);
-        w = new WordImage("pearl");
+        w = new WordImage(l.getWords()[randomNumber]);
+        
     }
     
-    public HangmanWorld(HangmanImage h, WordImage w) {
+    public HangmanWorld(WordLib l, HangmanImage h, WordImage w) {
+    	this.l = l;
         this.h = h;
         this.w = w;
     }
@@ -39,10 +48,16 @@ public class HangmanWorld implements IWorld {
 	       /* (ch >= 'a' &&   ch <= 'z')  */
 	        if (this.w.isInWord(ch)) {    //if the key pressed is a letter in the word:
 	        	this.w.makeGuess(ch);  //"make the guess" --> updates the wordImage
-	        	return new HangmanWorld( this.h, w.update() ); //returns HangmanWorld without updating the HangmanImage, but updates the WordImage
+	        	return new HangmanWorld( this.l, this.h, w.update() ); //returns HangmanWorld without updating the HangmanImage, but updates the WordImage
 	        } else {
-	        	this.w.wrongLetters += ch; //adds the wrong guess into the "list" of wrong guesses
-	        	return new HangmanWorld( h.update(), w.update() );  //returns a HangmanWorld, updating the HangmanImage to account for the wrong guess
+	        	if (this.w.isInWrong(ch)) {
+					return new HangmanWorld( this.l, this.h, w.update() );  //returns a HangmanWorld, doesn't update the HangmanImage
+				} else {
+					this.w.wrongLetters += ch; //adds the wrong guess into the "list" of wrong guesses
+					return new HangmanWorld( this.l, h.update(), w.update() );  //returns a HangmanWorld, updating the HangmanImage to account for the wrong guess
+				}
+	        	 
+	        	
 	        }
     	}
     }
