@@ -35,8 +35,13 @@ public class WordImage {
 			}
 			return this;
 		} else {
-			this.wrongLetters += ch;
-			return this;
+			if (this.isInWrong(ch)) {  //if the guess has already been guessed, dont add to the wrongLetters
+				return this;
+			} else {
+				this.wrongLetters += ch;
+				return this;
+
+			}
 		}
 	}
 	
@@ -54,6 +59,16 @@ public class WordImage {
 	public boolean isInGuess(char ch) {
 	    for (int i = 0 ; i < this.word.length() ; i++) {
 	    	if (this.guess.charAt(i) == ch) {
+	    		return true;
+	    	}
+	    }
+	    return false;
+	}
+	
+	/* if ch occurs in the wrongLetters, helper function for makeGuess() */
+	public boolean isInWrong(char ch) {
+	    for (int i = 0 ; i < this.wrongLetters.length() ; i++) {
+	    	if (this.wrongLetters.charAt(i) == ch) {
 	    		return true;
 	    	}
 	    }
@@ -84,7 +99,7 @@ public class WordImage {
         
         //letters that are not in the word get rendered
         for (int k = 0 ; k < this.wrongLetters.length() ; k++) {
-        	c.text(this.wrongLetters.charAt(k), (250 + (20 * k)), 200);
+        	c.text(this.wrongLetters.charAt(k), (40 + (20 * k)), 100);
         }
         
         //displays a "You Win!" if the word has been correctly guessed
