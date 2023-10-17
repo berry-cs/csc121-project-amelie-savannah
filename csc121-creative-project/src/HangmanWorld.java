@@ -3,9 +3,9 @@ import java.util.Random;
 import processing.event.KeyEvent;
 
 public class HangmanWorld implements IWorld {
-	WordLib l;
-    HangmanImage h;
-    WordImage w;
+	private WordLib l;
+    private HangmanImage h;
+    private WordImage w;
 
     public HangmanWorld() {
     	l = new WordLib();
@@ -15,7 +15,7 @@ public class HangmanWorld implements IWorld {
     	
         h = new HangmanImage(0);
         w = new WordImage(l.getWords()[randomNumber]);
-        
+ 
     }
     
     public HangmanWorld(WordLib l, HangmanImage h, WordImage w) {
@@ -53,7 +53,7 @@ public class HangmanWorld implements IWorld {
 	        	if (this.w.isInWrong(ch)) {
 					return new HangmanWorld( this.l, this.h, w.update() );  //returns a HangmanWorld, doesn't update the HangmanImage
 				} else {
-					this.w.wrongLetters += ch; //adds the wrong guess into the "list" of wrong guesses
+					this.w.setWrongLetters(this.w.getWrongLetters() + ch); //adds the wrong guess into the "list" of wrong guesses
 					return new HangmanWorld( this.l, h.update(), w.update() );  //returns a HangmanWorld, updating the HangmanImage to account for the wrong guess
 				}
 	        	 

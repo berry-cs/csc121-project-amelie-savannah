@@ -8,9 +8,9 @@ import processing.event.MouseEvent;
  * the word to guess is displayed, it responds to mousePress 
  */
 public class WordImage {
-	String word; //word to be guessed
-	String guess;  //string that user guesses
-	String wrongLetters; //string of the wrong letters guessed
+	private String word; //word to be guessed
+	private String guess;  //string that user guesses
+	private String wrongLetters; //string of the wrong letters guessed
 	
 	public WordImage(String word) {
 	    this(word, " ".repeat(word.length()), "");
@@ -19,7 +19,7 @@ public class WordImage {
 	public WordImage(String word, String guess, String wrongLetters) {
 	    this.guess = guess;
 		this.word = word;
-		this.wrongLetters = wrongLetters;
+		this.setWrongLetters(wrongLetters);
 	}
 	
 	/* replace " " with ch in `guess` in the corresponding positions
@@ -38,7 +38,7 @@ public class WordImage {
 			if (this.isInWrong(ch)) {  //if the guess has already been guessed, dont add to the wrongLetters
 				return this;
 			} else {
-				this.wrongLetters += ch;
+				this.setWrongLetters(this.getWrongLetters() + ch);
 				return this;
 
 			}
@@ -67,8 +67,8 @@ public class WordImage {
 	
 	/* if ch occurs in the wrongLetters, helper function for makeGuess() */
 	public boolean isInWrong(char ch) {
-	    for (int i = 0 ; i < this.wrongLetters.length() ; i++) {
-	    	if (this.wrongLetters.charAt(i) == ch) {
+	    for (int i = 0 ; i < this.getWrongLetters().length() ; i++) {
+	    	if (this.getWrongLetters().charAt(i) == ch) {
 	    		return true;
 	    	}
 	    }
@@ -98,8 +98,8 @@ public class WordImage {
         }
         
         //letters that are not in the word get rendered
-        for (int k = 0 ; k < this.wrongLetters.length() ; k++) {
-        	c.text(this.wrongLetters.charAt(k), (40 + (20 * k)), 100);
+        for (int k = 0 ; k < this.getWrongLetters().length() ; k++) {
+        	c.text(this.getWrongLetters().charAt(k), (40 + (20 * k)), 100);
         }
         
         //displays a "You Win!" if the word has been correctly guessed
@@ -111,7 +111,7 @@ public class WordImage {
         }
         
         //displays a "Game Over!" and what the correct answer was if the limit of wrong guesses has been reached
-        if (this.wrongLetters.length() >= 6) {
+        if (this.getWrongLetters().length() >= 6) {
         	c.textSize(50);
         	c.text("Game Over!", 80 , 275);
         	c.textSize(20);
@@ -128,7 +128,7 @@ public class WordImage {
      * This doesn't do anything
     */
     public WordImage update() {
-       return new WordImage(this.word, this.guess, this.wrongLetters);  
+       return new WordImage(this.word, this.guess, this.getWrongLetters());  
     }
     
     
@@ -136,12 +136,12 @@ public class WordImage {
      * This does nothing right now
      */
     public WordImage mousePressed(MouseEvent mev) {
-        return new WordImage(this.word, this.guess, this.wrongLetters);
+        return new WordImage(this.word, this.guess, this.getWrongLetters());
     }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(guess, word, wrongLetters);
+		return Objects.hash(guess, word, getWrongLetters());
 	}
 
 	@Override
@@ -154,11 +154,19 @@ public class WordImage {
 			return false;
 		WordImage other = (WordImage) obj;
 		return Objects.equals(guess, other.guess) && Objects.equals(word, other.word)
-				&& Objects.equals(wrongLetters, other.wrongLetters);
+				&& Objects.equals(getWrongLetters(), other.getWrongLetters());
 	}
 
 	@Override
 	public String toString() {
-		return "WordImage [word=" + word + ", guess=" + guess + ", wrongLetters=" + wrongLetters + "]";
+		return "WordImage [word=" + word + ", guess=" + guess + ", wrongLetters=" + getWrongLetters() + "]";
+	}
+
+	public String getWrongLetters() {
+		return wrongLetters;
+	}
+
+	public void setWrongLetters(String wrongLetters) {
+		this.wrongLetters = wrongLetters;
 	}  
 }
