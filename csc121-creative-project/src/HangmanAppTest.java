@@ -21,7 +21,9 @@ class HangmanAppTest {
     	assertEquals(true, wi1.isInWord('a'));
     	assertEquals(true, wi1.isInWord('r'));
     	assertEquals(true, wi1.isInWord('l'));
-    	
+    	assertEquals(false, wi1.isInWord('z'));
+    	assertEquals(false, wi1.isInWord('1'));
+    	assertEquals(false, wi1.isInWord('@'));
     	
     	assertEquals(false, wi1.wordDone());
         assertEquals(wi2, wi1.makeGuess('e')); //" e   "
