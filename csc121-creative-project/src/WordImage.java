@@ -75,6 +75,7 @@ public class WordImage {
 	    return false;
 	}
 	
+	
 	/** is the word completed? */
 	public boolean wordDone() {
 		return !(this.isInGuess(' '));
