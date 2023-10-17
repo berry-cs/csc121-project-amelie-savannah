@@ -5,7 +5,7 @@ import processing.event.*;
  * Provides the scaffolding to launch a Processing application
  */
 public class HangmanApp extends PApplet {
-    IWorld w;
+    private IWorld w;
     
     public void settings() {
         this.size(400, 400);

@@ -6,7 +6,7 @@ import processing.event.MouseEvent;
  * is displayed to show game progress in Hangman. It responds to mousePress
  */
 public class HangmanImage {
-	int status; //number representing how many wrong guesses
+	private int status; //number representing how many wrong guesses
 	
 	public HangmanImage(int status) {
 		this.status = status;
