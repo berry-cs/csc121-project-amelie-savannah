@@ -27,22 +27,25 @@ public class WordImage {
 	   add 1 to status.
 	 */
 	public WordImage makeGuess(char ch) {
-		if (this.isInWord(ch)) {
-			for (int i = 0 ; i < this.word.length() ; i++) {
-				if (this.word.charAt(i) == ch) {
-					this.guess = this.guess.substring(0,i) + ch + this.guess.substring(i+1, this.word.length());
-		    	}
-			}
-			return this;
-		} else {
-			if (this.isInWrong(ch)) {  //if the guess has already been guessed, dont add to the wrongLetters
+		if (Character.isLetter(ch)) {
+			if (this.isInWord(ch)) {
+				for (int i = 0 ; i < this.word.length() ; i++) {
+					if (this.word.charAt(i) == ch) {
+						this.guess = this.guess.substring(0,i) + ch + this.guess.substring(i+1, this.word.length());
+			    	}
+				}
 				return this;
 			} else {
-				this.setWrongLetters(this.getWrongLetters() + ch);
-				return this;
-
+				if (this.isInWrong(ch)) {  //if the guess has already been guessed, dont add to the wrongLetters
+					return this;
+				} else {
+					this.setWrongLetters(this.getWrongLetters() + ch);
+					return this;
+	
+				}
 			}
 		}
+		return this;
 	}
 	
 	/* if ch occurs in this word */
