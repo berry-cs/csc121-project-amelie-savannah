@@ -37,17 +37,16 @@ public class HangmanWorld implements IWorld {
     
     /** updates the world according to the key press */
     public IWorld keyPressed(KeyEvent kev) {
-    	char ch = Character.toLowerCase( kev.getKey() );
-    	  if (Character.isLetter(ch)) {
-    	        ch = Character.toLowerCase(ch); // Convert to lowercase
-	    	if (kev.getKey() == '.') {  //if the '.' is pressed, a new world is returned
-	    		return new StartWorld();
-	    	} else if (this.w.wordDone()) {  //if the word is already finished the world will not update
+    	char ch = Character.toLowerCase( kev.getKey() ); // Convert to lowercase
+    	if (kev.getKey() == '.') {  //if the '.' is pressed, a new world is returned
+    		return new StartWorld();
+    	}
+    	if (Character.isLetter(ch)) {
+    		if (this.w.wordDone()) {  //if the word is already finished the world will not update
 	    		return this;
 	    	} else if (this.h.manFilled()) {  //if the hangman is already full the world will not update
 	    		return this;
 	    	} else {
-		       /* (ch >= 'a' &&   ch <= 'z')  */
 		        if (this.w.isInWord(ch)) {    //if the key pressed is a letter in the word:
 		        	this.w.makeGuess(ch);  //"make the guess" --> updates the wordImage
 		        	return new HangmanWorld( this.l, this.h, w.update() ); //returns HangmanWorld without updating the HangmanImage, but updates the WordImage
