@@ -22,8 +22,10 @@ class HangmanAppTest {
     	assertEquals(true, wi1.isInWord('r'));
     	assertEquals(true, wi1.isInWord('l'));
     	assertEquals(false, wi1.isInWord('z'));
+    	//testing non-letters to make sure they aren't in word:
     	assertEquals(false, wi1.isInWord('1'));
     	assertEquals(false, wi1.isInWord('@'));
+    	
     	
     	assertEquals(false, wi1.wordDone());
         assertEquals(wi2, wi1.makeGuess('e')); //" e   "
@@ -31,6 +33,21 @@ class HangmanAppTest {
         assertEquals(wi4, wi1.makeGuess('l')); //" e  l"
         assertEquals(false, wi1.wordDone()); //not done ^
         assertEquals(true, wi1.isInGuess(' '));   //there are spaces still in the word --> word is not fully guessed
+        
+        //testing to make sure 'non-letters' don't get added to wrongLetters
+        wi1.makeGuess('@');
+        assertEquals(false, wi1.isInWrong('@'));
+        wi1.makeGuess('7');
+        assertEquals(false, wi1.isInWrong('7'));
+        wi1.makeGuess('?');
+        assertEquals(false, wi1.isInWrong('?'));
+        wi1.makeGuess('=');
+        assertEquals(false, wi1.isInWrong('='));
+        wi1.makeGuess('~');
+        assertEquals(false, wi1.isInWrong('~'));
+        wi1.makeGuess('.');
+        assertEquals(false, wi1.isInWrong('.'));
+        
         
         assertEquals(false, wi5.wordDone());
         assertEquals(wi6, wi5.makeGuess('t')); //"t "
