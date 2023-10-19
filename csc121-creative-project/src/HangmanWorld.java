@@ -6,6 +6,7 @@ public class HangmanWorld implements IWorld {
 	private WordLib l;
     private HangmanImage h;
     private WordImage w;
+    private PImage photo;
 
     public HangmanWorld() {
     	l = new WordLib();
@@ -15,6 +16,8 @@ public class HangmanWorld implements IWorld {
     	
         h = new HangmanImage(0);
         w = new WordImage(l.getWords()[randomNumber]);
+        
+        photo = null;
  
     }
     
@@ -25,7 +28,12 @@ public class HangmanWorld implements IWorld {
     }
 
     public PApplet draw(PApplet c) {
-        c.background(255);
+       // c.background(255);
+    	if (photo == null) {
+			 photo = c.loadImage("hangmanbase.png");
+		}
+		c.background(photo);
+		c.image(photo, 0, 0);
         h.draw(c);
         w.draw(c);
         return c;

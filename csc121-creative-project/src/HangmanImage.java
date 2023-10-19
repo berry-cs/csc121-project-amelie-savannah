@@ -17,8 +17,8 @@ public class HangmanImage {
      */
     public PApplet draw(PApplet c) {
         c.textSize(20);
-        c.text("Hangman!", 20, 20);
-        c.fill(0, 0, 255);
+       // c.text("Hangman!", 20, 20);
+       c.fill(0, 0, 255);
         
         //stand of the hangman
         c.line(200, 150, 350, 150); //base of the stand

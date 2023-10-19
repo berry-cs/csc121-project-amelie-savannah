@@ -27,9 +27,7 @@ public class WordImage {
 	
 	
 	public WordImage(String word) {
-	    this(word, " ".repeat(word.length()), "");
-	    
-	    
+	    this(word, " ".repeat(word.length()), "");   
 	}
 
 	public WordImage(String word, String guess, String wrongLetters) {
@@ -104,7 +102,8 @@ public class WordImage {
      * Renders a picture of the letter spaces of the word on the window
      */
     public PApplet draw(PApplet c) {
-    	
+    	  c.fill(0, 0, 255);
+    	  
     	//spaces for the letters of the word
     	for (int i = 0 ; i < this.word.length(); i++) {
     		c.line(LLEFTMARGIN+(LSPACING * i), LTOPMARGIN, LRIGHTMARGIN+(LSPACING * i), LTOPMARGIN);
