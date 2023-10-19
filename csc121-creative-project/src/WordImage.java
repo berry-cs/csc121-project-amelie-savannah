@@ -12,8 +12,24 @@ public class WordImage {
 	private String guess;  //string that user guesses
 	private String wrongLetters; //string of the wrong letters guessed
 	
+	final static int LSPACING = 30;
+	final static int LLEFTMARGIN  = 20;
+	final static int LRIGHTMARGIN = 40;
+	final static int LTOPMARGIN = 200;
+	
+	final static int ALEFTMARGIN = 27;
+	final static int ATOPMARGIN = 195;
+	
+	final static int WSPACING = 20;
+	final static int WLEFTMARGIN = 40;
+	final static int WTOPMARGIN = 100;
+	
+	
+	
 	public WordImage(String word) {
 	    this(word, " ".repeat(word.length()), "");
+	    
+	    
 	}
 
 	public WordImage(String word, String guess, String wrongLetters) {
@@ -91,19 +107,19 @@ public class WordImage {
     	
     	//spaces for the letters of the word
     	for (int i = 0 ; i < this.word.length(); i++) {
-    		c.line(20+(30 * i), 200, 40+(30 * i), 200);
+    		c.line(LLEFTMARGIN+(LSPACING * i), LTOPMARGIN, LRIGHTMARGIN+(LSPACING * i), LTOPMARGIN);
     	}
     	
     	c.textSize(12);
     	
         //letters to go above the corresponding lines
         for (int j = 0 ; j < this.word.length(); j++) {
-        	c.text(this.guess.charAt(j), 27+(30* j), 195);
+        	c.text(this.guess.charAt(j), ALEFTMARGIN+(LSPACING* j), ATOPMARGIN);
         }
         
         //letters that are not in the word get rendered
         for (int k = 0 ; k < this.getWrongLetters().length() ; k++) {
-        	c.text(this.getWrongLetters().charAt(k), (40 + (20 * k)), 100);
+        	c.text(this.getWrongLetters().charAt(k), (WLEFTMARGIN + (WSPACING * k)), WTOPMARGIN);
         }
         
         //displays a "You Win!" if the word has been correctly guessed
