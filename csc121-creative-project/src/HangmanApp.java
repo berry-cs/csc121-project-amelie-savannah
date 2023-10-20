@@ -6,9 +6,11 @@ import processing.event.*;
  */
 public class HangmanApp extends PApplet {
     private IWorld w;
+    final static int SETX = 400;
+    final static int SETY = 400;
     
     public void settings() {
-        this.size(400, 400);
+        this.size(SETX, SETY);
     }
     
     public void setup() {
