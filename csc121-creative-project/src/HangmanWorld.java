@@ -6,7 +6,19 @@ public class HangmanWorld implements IWorld {
 	private WordLib l;
     private HangmanImage h;
     private WordImage w;
-    private PImage photo;
+    private PImage start;
+    
+	final static int IMAGEX = 0;
+	final static int IMAGEY = 0;
+	
+	final static int WINNERIMAGEX = 0;
+	final static int WINNERIMAGEY = 0;
+	
+	final static int LOSERIMAGEX = 0;
+	final static int LOSERIMAGEY = 0;
+	
+	private PImage winner; // winner image
+	private PImage loser; // loser image
 
     public HangmanWorld() {
     	l = new WordLib();
@@ -17,7 +29,10 @@ public class HangmanWorld implements IWorld {
         h = new HangmanImage(0);
         w = new WordImage(l.getWords()[randomNumber]);
         
-        photo = null;
+        start = null;
+        winner = null;
+        loser = null;
+        
  
     }
     
@@ -29,13 +44,39 @@ public class HangmanWorld implements IWorld {
 
     public PApplet draw(PApplet c) {
        // c.background(255);
-    	if (photo == null) {
-			 photo = c.loadImage("hangmanbase.png");
+    	if (start == null) {
+    		start = c.loadImage("hangmanbase.png");
 		}
-		c.background(photo);
-		c.image(photo, 0, 0);
-        h.draw(c);
+    	
+    	if (loser == null) {
+    		loser = c.loadImage("lose.png");
+       	}
+    	
+    	if (winner == null) {
+    		winner = c.loadImage("win.png");
+       	}
+    		
+    	//  if this.w.isGameLost()
+		//          		c.background(loser);
+    	
+    	
         w.draw(c);
+    	
+      	if (this.w.gameLost()) {
+       		c.background(loser);
+       		c.image(loser, LOSERIMAGEX, LOSERIMAGEY);
+      	} else if (this.w.wordDone()) {
+      		c.background(winner);
+           	c.image(winner, WINNERIMAGEX, WINNERIMAGEY);
+      	} else {
+      		c.image(start, IMAGEX, IMAGEY);
+      		c.background(start);
+    	}
+      	
+      	 h.draw(c);
+      	 w.draw(c);
+
+		
         return c;
     }
     
