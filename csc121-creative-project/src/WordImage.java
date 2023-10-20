@@ -1,4 +1,5 @@
 import java.util.Objects;
+import processing.core.PImage;
 
 import processing.core.PApplet;
 import processing.event.MouseEvent;
@@ -8,9 +9,9 @@ import processing.event.MouseEvent;
  * the word to guess is displayed, it responds to mousePress 
  */
 public class WordImage {
-	private String word; //word to be guessed
-	private String guess;  //string that user guesses
-	private String wrongLetters; //string of the wrong letters guessed
+	private String word; // word to be guessed
+	private String guess;  // string that user guesses
+	private String wrongLetters; // string of the wrong letters guessed
 	
 	final static int LSPACING = 30;
 	final static int LLEFTMARGIN  = 20;
@@ -24,6 +25,12 @@ public class WordImage {
 	final static int WLEFTMARGIN = 40;
 	final static int WTOPMARGIN = 100;
 	
+	final static int GUESSTEXTX = 170;
+	final static int GUESSTEXTY = 350;
+	
+	final static int TEXTSIZE = 12;
+	final static int GUESSLIMIT = 6;
+	final static int LARGETEXTSIZE = 20;
 	
 	
 	public WordImage(String word) {
@@ -109,7 +116,7 @@ public class WordImage {
     		c.line(LLEFTMARGIN+(LSPACING * i), LTOPMARGIN, LRIGHTMARGIN+(LSPACING * i), LTOPMARGIN);
     	}
     	
-    	c.textSize(12);
+    	c.textSize(TEXTSIZE);
     	
         //letters to go above the corresponding lines
         for (int j = 0 ; j < this.word.length(); j++) {
@@ -121,25 +128,13 @@ public class WordImage {
         	c.text(this.getWrongLetters().charAt(k), (WLEFTMARGIN + (WSPACING * k)), WTOPMARGIN);
         }
         
-        //displays a "You Win!" if the word has been correctly guessed
-        if (this.wordDone()) {
-        	c.textSize(50);
-        	c.text("You Win!", 100 , 300);
-        	c.textSize(15);
-        	c.text("press period to start a new game", 90, 330);
+        if (this.gameLost()) {
+        	c.textSize(LARGETEXTSIZE);
+        	c.text(this.word, GUESSTEXTX, GUESSTEXTY);
         }
         
-        //displays a "Game Over!" and what the correct answer was if the limit of wrong guesses has been reached
-        if (this.getWrongLetters().length() >= 6) {
-        	c.textSize(50);
-        	c.text("Game Over!", 80 , 275);
-        	c.textSize(20);
-        	c.text(("The correct answer was: " + this.word), 65, 315);
-        	c.textSize(15);
-        	c.text("press period to start a new game", 90, 350);
-        }
         
-        c.textSize(12); //resetting the text size to 12 so the start or final images aren't messed up
+        c.textSize(TEXTSIZE); //resetting the text size so the start or final images aren't messed up
         return c;
     }
 
@@ -150,6 +145,9 @@ public class WordImage {
        return new WordImage(this.word, this.guess, this.getWrongLetters());  
     }
     
+    public boolean gameLost() {
+    	return (this.getWrongLetters().length() >= GUESSLIMIT);
+    }
     
     /**
      * This does nothing right now
