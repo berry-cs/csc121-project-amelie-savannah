@@ -11,17 +11,23 @@ public class HangmanImage {
 	final static int BLEFTMARGIN = 200;
 	final static int STOPMARGIN = 150;
 	final static int BRIGHTMARGIN = 350;
+	
 	final static int SLEFTMARGIN = 240;
 	final static int S2TOPMARGIN = 5;
 	final static int ARIGHTMARGIN = 300;
+	
 	final static int START = 300;
 	final static int HRADIUS = 20;
 	final static int SBOTTOMMARGIN = 30;
 	final static int S3TOPMARGIN = 80;
+	
 	final static int LABOTTOMMARGIN = 45;
 	final static int LARIGHTMARGIN = 280;
 	final static int RARIGHTMARGIN = 320;
 	final static int LTOPMARGIN = 105;
+	
+	final static int LARGETEXT = 20;
+	final static int GUESSLIMIT = 6;
 	
 	public HangmanImage(int status) {
 		this.status = status;
@@ -31,7 +37,7 @@ public class HangmanImage {
      * Renders a picture of the hangman on the window
      */
     public PApplet draw(PApplet c) {
-        c.textSize(20);
+        c.textSize(LARGETEXT);
        // c.text("Hangman!", 20, 20);
         c.fill(0, 0, 255);
         
@@ -66,7 +72,7 @@ public class HangmanImage {
 
     /** returns true if the hangman has been filled i.e. game over */
     public boolean manFilled() {
-		return (status >= 6);
+		return (status >= GUESSLIMIT);
 	}
     
     /**
