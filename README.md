@@ -1,6 +1,6 @@
 
 # HANGMAN
-by Savannah Laudicina and Amelie Willet
+by *Savannah Laudicina* and *Amelie Willet*
 
 blurb...
 *add screenshots ![]*
